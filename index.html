@@ -1,230 +1,550 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
 <title>Nightreign Timer</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
 <style>
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background: #111;
-        color: white;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+
+:root{
+
+    /* MATERIAL DESIGN DARK */
+
+    --bg:#121212;
+
+    --surface:#1E1E1E;
+
+    --surface-2:#242424;
+
+    --outline:#2D2D2D;
+
+    --text-primary:#FFFFFF;
+
+    --text-secondary:#B3B3B3;
+
+    --green:#5ce65c;
+
+    --green-dark:#33c233;
+
+    --yellow:#ffd633;
+
+    --red:#ff4d4d;
+
+}
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+
+    margin:0;
+
+    background:var(--bg);
+
+    color:var(--text-primary);
+
+    font-family:'Inter', sans-serif;
+
+    display:flex;
+
+    justify-content:center;
+
+    min-height:100vh;
+
+    padding:24px 18px 40px;
+
+}
+
+.app{
+
+    width:100%;
+    max-width:420px;
+
+}
+
+/* HEADER */
+
+.header{
+
+    display:flex;
+    justify-content:center;
+
+    margin-bottom:28px;
+
+}
+
+.title{
+
+    font-size:2.15rem;
+
+    font-weight:800;
+
+    letter-spacing:-1px;
+
+    color:var(--text-primary);
+
+}
+
+/* BUTTON */
+
+#startBtn{
+
+    width:100%;
+
+    height:88px;
+
+    border:none;
+
+    border-radius:28px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--green),
+            var(--green-dark)
+        );
+
+    color:white;
+
+    font-size:1.9rem;
+
+    font-weight:800;
+
+    cursor:pointer;
+
+    margin-bottom:26px;
+
+    transition:
+        transform 0.15s ease,
+        filter 0.2s ease;
+
+    box-shadow:
+        0 4px 16px rgba(76,217,100,0.25);
+
+}
+
+#startBtn:active{
+
+    transform:scale(0.985);
+
+}
+
+#startBtn:hover{
+
+    filter:brightness(1.04);
+
+}
+
+/* TIMER CARD */
+
+.timer-card{
+
+    background:var(--surface);
+
+    border:1px solid var(--outline);
+
+    border-radius:28px;
+
+    padding:22px;
+
+    margin-bottom:22px;
+
+    box-shadow:
+        0 2px 10px rgba(0,0,0,0.28);
+
+}
+
+/* LABEL */
+
+.timer-label{
+
+    font-size:1rem;
+
+    font-weight:700;
+
+    margin-bottom:18px;
+
+    letter-spacing:0.2px;
+
+}
+
+/* LABEL COLORS */
+
+.label-green{
+    color:var(--green);
+}
+
+.label-yellow{
+    color:var(--yellow);
+}
+
+.label-red{
+    color:var(--red);
+}
+
+/* TIME */
+
+.timer-time{
+
+    font-size:5rem;
+
+    font-weight:800;
+
+    line-height:1;
+
+    letter-spacing:-4px;
+
+    margin-bottom:24px;
+
+    color:var(--text-primary);
+
+}
+
+/* PROGRESS */
+
+.progress-track{
+
+    width:100%;
+
+    height:22px;
+
+    background:#0F0F0F;
+
+    border-radius:999px;
+
+    overflow:hidden;
+
+    border:1px solid rgba(255,255,255,0.04);
+
+}
+
+.progress-fill{
+
+    width:100%;
+
+    height:100%;
+
+    border-radius:999px;
+
+    transition:
+        width 1s linear,
+        background 0.4s ease;
+
+}
+
+/* FOOTER */
+
+.footer{
+
+    margin-top:8px;
+
+    text-align:center;
+
+    color:var(--text-secondary);
+
+    font-size:1rem;
+
+    line-height:1.5;
+
+    padding:0 10px;
+
+}
+
+/* MOBILE */
+
+@media (max-width:420px){
+
+    .title{
+        font-size:1.9rem;
     }
 
-    h1 {
-        margin: 20px 0;
+    .timer-time{
+        font-size:4.25rem;
     }
 
-    .container {
-        width: 90%;
-        max-width: 400px;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
+    #startBtn{
+        height:82px;
+        font-size:1.7rem;
     }
 
-    .timer {
-        position: relative;
-        border-radius: 15px;
-        overflow: hidden;
-        background: #333;
-        height: 90px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 2.5rem;
-        font-weight: bold;
-    }
+}
 
-    .progress {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 100%;
-        background: #4cd964; /* verde claro inicial */
-        transition: width 1s linear, background 0.5s;
-        z-index: 0;
-    }
-
-    .time-text {
-        position: relative;
-        z-index: 1;
-    }
-
-    button {
-        width: 100%;
-        padding: 20px;
-        font-size: 1.5rem;
-        border: none;
-        border-radius: 15px;
-        cursor: pointer;
-        font-weight: bold;
-        transition: 0.2s;
-    }
-
-    #startBtn {
-        background: #28a745;
-        color: white;
-    }
-
-    #continueBtn {
-        background: #007bff;
-        color: white;
-    }
-
-    button:disabled {
-        background: #555;
-        cursor: not-allowed;
-        opacity: 0.6;
-    }
-
-    button:active:not(:disabled) {
-        transform: scale(0.97);
-    }
 </style>
 </head>
 
 <body>
 
-<h1>Nigthreign Timer</h1>
+<div class="app">
 
-<div class="container">
-    <button id="startBtn">Iniciar</button>
+    <!-- HEADER -->
 
-    <div class="timer">
-        <div class="progress" id="p1"></div>
-        <div class="time-text" id="t1"></div>
+    <div class="header">
+
+        <div class="title">
+            Nightreign Timer
+        </div>
+
     </div>
 
-    <div class="timer">
-        <div class="progress" id="p2"></div>
-        <div class="time-text" id="t2"></div>
+    <!-- START BUTTON -->
+
+    <button id="startBtn">
+        ▶ INICIAR
+    </button>
+
+    <!-- TIMER 1 -->
+
+    <div class="timer-card">
+
+        <div class="timer-label label-green">
+            Storm 1 Starts
+        </div>
+
+        <div class="timer-time" id="t1">
+            04:30
+        </div>
+
+        <div class="progress-track">
+            <div class="progress-fill" id="p1"></div>
+        </div>
+
     </div>
 
-    <button id="continueBtn" disabled>Continuar</button>
+    <!-- TIMER 2 -->
 
-    <div class="timer">
-        <div class="progress" id="p3"></div>
-        <div class="time-text" id="t3"></div>
+    <div class="timer-card">
+
+        <div class="timer-label label-yellow">
+            Storm 1 Finishes
+        </div>
+
+        <div class="timer-time" id="t2">
+            03:00
+        </div>
+
+        <div class="progress-track">
+            <div class="progress-fill" id="p2"></div>
+        </div>
+
     </div>
 
-    <div class="timer">
-        <div class="progress" id="p4"></div>
-        <div class="time-text" id="t4"></div>
+    <!-- TIMER 3 -->
+
+    <div class="timer-card">
+
+        <div class="timer-label label-green">
+            Storm 2 Starts
+        </div>
+
+        <div class="timer-time" id="t3">
+            03:30
+        </div>
+
+        <div class="progress-track">
+            <div class="progress-fill" id="p3"></div>
+        </div>
+
     </div>
+
+    <!-- TIMER 4 -->
+
+    <div class="timer-card">
+
+        <div class="timer-label label-red">
+            Storm 2 Finishes
+        </div>
+
+        <div class="timer-time" id="t4">
+            03:00
+        </div>
+
+        <div class="progress-track">
+            <div class="progress-fill" id="p4"></div>
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+
+    <div class="footer">
+        ↻ Ao finalizar, tudo será reiniciado automaticamente.
+    </div>
+
 </div>
 
 <script>
-    const initialTimes = [270, 180, 270, 180];
 
-    const timers = [
-        { time: 270, text: t1, bar: p1 },
-        { time: 180, text: t2, bar: p2 },
-        { time: 270, text: t3, bar: p3 },
-        { time: 180, text: t4, bar: p4 }
-    ];
+const initialTimes = [
+    270, // 4:30
+    180, // 3:00
+    210, // 3:30
+    180  // 3:00
+];
 
-    let current = 0;
-    let interval = null;
-    let running = false;
+const timers = [
+    { time:270, text:t1, bar:p1 },
+    { time:180, text:t2, bar:p2 },
+    { time:210, text:t3, bar:p3 },
+    { time:180, text:t4, bar:p4 }
+];
 
-    const startBtn = document.getElementById("startBtn");
-    const continueBtn = document.getElementById("continueBtn");
+let current = 0;
 
-    function formatTime(seconds) {
-        const m = String(Math.floor(seconds / 60)).padStart(2, '0');
-        const s = String(seconds % 60).padStart(2, '0');
-        return `${m}:${s}`;
+let interval = null;
+
+let running = false;
+
+const startBtn =
+    document.getElementById("startBtn");
+
+/* FORMAT */
+
+function formatTime(seconds){
+
+    const minutes =
+        String(Math.floor(seconds / 60))
+        .padStart(2,'0');
+
+    const secs =
+        String(seconds % 60)
+        .padStart(2,'0');
+
+    return `${minutes}:${secs}`;
+}
+
+/* BAR COLOR */
+
+function getColor(percent){
+
+    if(percent > 0.5){
+        return "#5ce65c";
     }
 
-    function getColor(percent) {
-        if (percent > 0.5) return "#4cd964"; // verde mais claro
-        if (percent > 0.2) return "#ffc107"; // amarelo
-        return "#dc3545"; // vermelho
+    if(percent > 0.2){
+        return "#ffd633";
     }
 
-    function updateDisplay() {
-        timers.forEach((t, i) => {
-            const percent = t.time / initialTimes[i];
-            t.text.textContent = formatTime(t.time);
-            t.bar.style.width = (percent * 100) + "%";
-            t.bar.style.background = getColor(percent);
-        });
-    }
+    return "#ff4d4d";
+}
 
-    function resetAll() {
-        clearInterval(interval);
-        interval = null;
-        running = false;
-        current = 0;
+/* UPDATE */
 
-        timers.forEach((t, i) => {
-            t.time = initialTimes[i];
-        });
+function updateDisplay(){
 
-        updateDisplay();
-        continueBtn.disabled = true;
-        startBtn.textContent = "Iniciar";
-    }
+    timers.forEach((timer,index)=>{
 
-    function runTimer(index) {
-        clearInterval(interval);
+        const percent =
+            timer.time / initialTimes[index];
 
-        interval = setInterval(() => {
-            if (!running) return;
+        timer.text.textContent =
+            formatTime(timer.time);
 
-            if (timers[index].time > 0) {
-                timers[index].time--;
-                updateDisplay();
-            } else {
-                clearInterval(interval);
+        timer.bar.style.width =
+            `${percent * 100}%`;
 
-                if (index === 0) {
-                    current = 1;
-                    runTimer(current);
-                } 
-                else if (index === 1) {
-                    running = false;
-                    startBtn.textContent = "Iniciar";
-                    continueBtn.disabled = false;
-                } 
-                else if (index === 2) {
-                    current = 3;
-                    runTimer(current);
-                } 
-                else {
-                    running = false;
-                    startBtn.textContent = "Iniciar";
-                }
+        timer.bar.style.background =
+            getColor(percent);
+
+    });
+
+}
+
+/* RESET */
+
+function resetAll(){
+
+    clearInterval(interval);
+
+    interval = null;
+
+    running = false;
+
+    current = 0;
+
+    timers.forEach((timer,index)=>{
+
+        timer.time =
+            initialTimes[index];
+
+    });
+
+    updateDisplay();
+
+    startBtn.innerHTML =
+        "▶ INICIAR";
+}
+
+/* RUN */
+
+function runTimer(index){
+
+    clearInterval(interval);
+
+    interval = setInterval(()=>{
+
+        if(!running) return;
+
+        if(timers[index].time > 0){
+
+            timers[index].time--;
+
+            updateDisplay();
+
+        }else{
+
+            clearInterval(interval);
+
+            if(index < timers.length - 1){
+
+                current = index + 1;
+
+                runTimer(current);
+
+            }else{
+
+                resetAll();
+
             }
-        }, 1000);
+
+        }
+
+    },1000);
+
+}
+
+/* BUTTON */
+
+startBtn.onclick = ()=>{
+
+    if(!running){
+
+        running = true;
+
+        startBtn.innerHTML =
+            "■ PARAR";
+
+        runTimer(current);
+
+    }else{
+
+        resetAll();
+
     }
 
-    startBtn.onclick = () => {
-        if (!running) {
-            running = true;
-            startBtn.textContent = "Parar";
-            runTimer(current);
-        } else {
-            resetAll();
-        }
-    };
+};
 
-    continueBtn.onclick = () => {
-        continueBtn.disabled = true;
-        current = 2;
-        running = true;
-        startBtn.textContent = "Parar";
-        runTimer(current);
-    };
+/* INIT */
 
-    resetAll();
+resetAll();
+
 </script>
 
 </body>
