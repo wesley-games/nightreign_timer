@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
 
 <title>Nightreign Timer</title>
 
@@ -20,8 +20,6 @@
     --bg:#121212;
 
     --surface:#1E1E1E;
-
-    --surface-2:#242424;
 
     --outline:#2D2D2D;
 
@@ -43,9 +41,16 @@
     box-sizing:border-box;
 }
 
+html,
 body{
 
     margin:0;
+    padding:0;
+
+    width:100%;
+    height:100%;
+
+    overflow:hidden;
 
     background:var(--bg);
 
@@ -53,20 +58,45 @@ body{
 
     font-family:'Inter', sans-serif;
 
+}
+
+/* ROOT */
+
+.viewport{
+
+    width:100vw;
+    height:100vh;
+
     display:flex;
-
     justify-content:center;
+    align-items:flex-start;
 
-    min-height:100vh;
+    overflow:hidden;
 
-    padding:24px 18px 40px;
+    padding-top:env(safe-area-inset-top);
 
 }
 
+/* SCALE CONTAINER */
+
+.scale-wrapper{
+
+    transform-origin:top center;
+
+    width:430px;
+
+}
+
+/* APP */
+
 .app{
 
-    width:100%;
-    max-width:420px;
+    width:430px;
+
+    padding:
+        20px
+        18px
+        24px;
 
 }
 
@@ -77,7 +107,7 @@ body{
     display:flex;
     justify-content:center;
 
-    margin-bottom:28px;
+    margin-bottom:18px;
 
 }
 
@@ -99,7 +129,7 @@ body{
 
     width:100%;
 
-    height:88px;
+    height:84px;
 
     border:none;
 
@@ -114,13 +144,13 @@ body{
 
     color:white;
 
-    font-size:1.9rem;
+    font-size:1.85rem;
 
     font-weight:800;
 
     cursor:pointer;
 
-    margin-bottom:26px;
+    margin-bottom:18px;
 
     transition:
         transform 0.15s ease,
@@ -137,12 +167,6 @@ body{
 
 }
 
-#startBtn:hover{
-
-    filter:brightness(1.04);
-
-}
-
 /* TIMER CARD */
 
 .timer-card{
@@ -151,11 +175,11 @@ body{
 
     border:1px solid var(--outline);
 
-    border-radius:28px;
+    border-radius:24px;
 
-    padding:22px;
+    padding:18px;
 
-    margin-bottom:22px;
+    margin-bottom:16px;
 
     box-shadow:
         0 2px 10px rgba(0,0,0,0.28);
@@ -170,7 +194,7 @@ body{
 
     font-weight:700;
 
-    margin-bottom:18px;
+    margin-bottom:14px;
 
     letter-spacing:0.2px;
 
@@ -194,7 +218,7 @@ body{
 
 .timer-time{
 
-    font-size:5rem;
+    font-size:4.4rem;
 
     font-weight:800;
 
@@ -202,7 +226,7 @@ body{
 
     letter-spacing:-4px;
 
-    margin-bottom:24px;
+    margin-bottom:18px;
 
     color:var(--text-primary);
 
@@ -214,7 +238,7 @@ body{
 
     width:100%;
 
-    height:22px;
+    height:18px;
 
     background:#0F0F0F;
 
@@ -244,36 +268,17 @@ body{
 
 .footer{
 
-    margin-top:8px;
+    margin-top:4px;
 
     text-align:center;
 
     color:var(--text-secondary);
 
-    font-size:1rem;
+    font-size:0.95rem;
 
-    line-height:1.5;
+    line-height:1.4;
 
     padding:0 10px;
-
-}
-
-/* MOBILE */
-
-@media (max-width:420px){
-
-    .title{
-        font-size:1.9rem;
-    }
-
-    .timer-time{
-        font-size:4.25rem;
-    }
-
-    #startBtn{
-        height:82px;
-        font-size:1.7rem;
-    }
 
 }
 
@@ -282,105 +287,115 @@ body{
 
 <body>
 
-<div class="app">
+<div class="viewport">
 
-    <!-- HEADER -->
+    <div class="scale-wrapper" id="scaleWrapper">
 
-    <div class="header">
+        <div class="app" id="app">
 
-        <div class="title">
-            Nightreign Timer
+            <!-- HEADER -->
+
+            <div class="header">
+
+                <div class="title">
+                    Nightreign Timer
+                </div>
+
+            </div>
+
+            <!-- BUTTON -->
+
+            <button id="startBtn">
+                ▶ INICIAR
+            </button>
+
+            <!-- TIMER 1 -->
+
+            <div class="timer-card">
+
+                <div class="timer-label label-green">
+                    Storm 1 Starts
+                </div>
+
+                <div class="timer-time" id="t1">
+                    04:30
+                </div>
+
+                <div class="progress-track">
+                    <div class="progress-fill" id="p1"></div>
+                </div>
+
+            </div>
+
+            <!-- TIMER 2 -->
+
+            <div class="timer-card">
+
+                <div class="timer-label label-yellow">
+                    Storm 1 Finishes
+                </div>
+
+                <div class="timer-time" id="t2">
+                    03:00
+                </div>
+
+                <div class="progress-track">
+                    <div class="progress-fill" id="p2"></div>
+                </div>
+
+            </div>
+
+            <!-- TIMER 3 -->
+
+            <div class="timer-card">
+
+                <div class="timer-label label-green">
+                    Storm 2 Starts
+                </div>
+
+                <div class="timer-time" id="t3">
+                    03:30
+                </div>
+
+                <div class="progress-track">
+                    <div class="progress-fill" id="p3"></div>
+                </div>
+
+            </div>
+
+            <!-- TIMER 4 -->
+
+            <div class="timer-card">
+
+                <div class="timer-label label-red">
+                    Storm 2 Finishes
+                </div>
+
+                <div class="timer-time" id="t4">
+                    03:00
+                </div>
+
+                <div class="progress-track">
+                    <div class="progress-fill" id="p4"></div>
+                </div>
+
+            </div>
+
+            <!-- FOOTER -->
+
+            <div class="footer">
+                ↻ Ao finalizar, tudo será reiniciado automaticamente.
+            </div>
+
         </div>
 
-    </div>
-
-    <!-- START BUTTON -->
-
-    <button id="startBtn">
-        ▶ INICIAR
-    </button>
-
-    <!-- TIMER 1 -->
-
-    <div class="timer-card">
-
-        <div class="timer-label label-green">
-            Storm 1 Starts
-        </div>
-
-        <div class="timer-time" id="t1">
-            04:30
-        </div>
-
-        <div class="progress-track">
-            <div class="progress-fill" id="p1"></div>
-        </div>
-
-    </div>
-
-    <!-- TIMER 2 -->
-
-    <div class="timer-card">
-
-        <div class="timer-label label-yellow">
-            Storm 1 Finishes
-        </div>
-
-        <div class="timer-time" id="t2">
-            03:00
-        </div>
-
-        <div class="progress-track">
-            <div class="progress-fill" id="p2"></div>
-        </div>
-
-    </div>
-
-    <!-- TIMER 3 -->
-
-    <div class="timer-card">
-
-        <div class="timer-label label-green">
-            Storm 2 Starts
-        </div>
-
-        <div class="timer-time" id="t3">
-            03:30
-        </div>
-
-        <div class="progress-track">
-            <div class="progress-fill" id="p3"></div>
-        </div>
-
-    </div>
-
-    <!-- TIMER 4 -->
-
-    <div class="timer-card">
-
-        <div class="timer-label label-red">
-            Storm 2 Finishes
-        </div>
-
-        <div class="timer-time" id="t4">
-            03:00
-        </div>
-
-        <div class="progress-track">
-            <div class="progress-fill" id="p4"></div>
-        </div>
-
-    </div>
-
-    <!-- FOOTER -->
-
-    <div class="footer">
-        ↻ Ao finalizar, tudo será reiniciado automaticamente.
     </div>
 
 </div>
 
 <script>
+
+/* TIMES */
 
 const initialTimes = [
     270, // 4:30
@@ -540,6 +555,48 @@ startBtn.onclick = ()=>{
     }
 
 };
+
+/* AUTO SCALE */
+
+function scaleToFit(){
+
+    const wrapper =
+        document.getElementById("scaleWrapper");
+
+    const app =
+        document.getElementById("app");
+
+    wrapper.style.transform =
+        "scale(1)";
+
+    const availableHeight =
+        window.innerHeight;
+
+    const appHeight =
+        app.offsetHeight;
+
+    const scale =
+        Math.min(
+            1,
+            availableHeight / appHeight
+        );
+
+    wrapper.style.transform =
+        `scale(${scale})`;
+
+}
+
+/* EVENTS */
+
+window.addEventListener(
+    "resize",
+    scaleToFit
+);
+
+window.addEventListener(
+    "load",
+    scaleToFit
+);
 
 /* INIT */
 
