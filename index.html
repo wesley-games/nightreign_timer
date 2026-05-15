@@ -67,23 +67,23 @@ body{
     width:100vw;
     height:100vh;
 
+    overflow:hidden;
+
     display:flex;
     justify-content:center;
     align-items:flex-start;
-
-    overflow:hidden;
 
     padding-top:env(safe-area-inset-top);
 
 }
 
-/* SCALE CONTAINER */
+/* SCALE WRAPPER */
 
 .scale-wrapper{
 
     transform-origin:top center;
 
-    width:430px;
+    width:min(100vw, 1000px);
 
 }
 
@@ -91,12 +91,12 @@ body{
 
 .app{
 
-    width:430px;
+    width:100%;
 
     padding:
-        20px
         18px
-        24px;
+        16px
+        22px;
 
 }
 
@@ -107,7 +107,7 @@ body{
     display:flex;
     justify-content:center;
 
-    margin-bottom:18px;
+    margin-bottom:16px;
 
 }
 
@@ -121,6 +121,8 @@ body{
 
     color:var(--text-primary);
 
+    text-align:center;
+
 }
 
 /* BUTTON */
@@ -129,11 +131,11 @@ body{
 
     width:100%;
 
-    height:84px;
+    height:78px;
 
     border:none;
 
-    border-radius:28px;
+    border-radius:26px;
 
     background:
         linear-gradient(
@@ -144,13 +146,13 @@ body{
 
     color:white;
 
-    font-size:1.85rem;
+    font-size:1.75rem;
 
     font-weight:800;
 
     cursor:pointer;
 
-    margin-bottom:18px;
+    margin-bottom:16px;
 
     transition:
         transform 0.15s ease,
@@ -177,9 +179,9 @@ body{
 
     border-radius:24px;
 
-    padding:18px;
+    padding:16px;
 
-    margin-bottom:16px;
+    margin-bottom:14px;
 
     box-shadow:
         0 2px 10px rgba(0,0,0,0.28);
@@ -190,11 +192,11 @@ body{
 
 .timer-label{
 
-    font-size:1rem;
+    font-size:0.95rem;
 
     font-weight:700;
 
-    margin-bottom:14px;
+    margin-bottom:12px;
 
     letter-spacing:0.2px;
 
@@ -218,7 +220,7 @@ body{
 
 .timer-time{
 
-    font-size:4.4rem;
+    font-size:4.2rem;
 
     font-weight:800;
 
@@ -226,7 +228,7 @@ body{
 
     letter-spacing:-4px;
 
-    margin-bottom:18px;
+    margin-bottom:16px;
 
     color:var(--text-primary);
 
@@ -238,7 +240,7 @@ body{
 
     width:100%;
 
-    height:18px;
+    height:16px;
 
     background:#0F0F0F;
 
@@ -274,11 +276,53 @@ body{
 
     color:var(--text-secondary);
 
-    font-size:0.95rem;
+    font-size:0.9rem;
 
     line-height:1.4;
 
-    padding:0 10px;
+    padding:0 8px;
+
+}
+
+/* LARGE DISPLAYS */
+
+@media (min-width:1200px){
+
+    .title{
+        font-size:2.6rem;
+    }
+
+    .timer-time{
+        font-size:5rem;
+    }
+
+    #startBtn{
+        height:88px;
+        font-size:2rem;
+    }
+
+    .timer-card{
+        padding:22px;
+    }
+
+}
+
+/* SMALL MOBILE */
+
+@media (max-width:380px){
+
+    .title{
+        font-size:1.7rem;
+    }
+
+    .timer-time{
+        font-size:3.7rem;
+    }
+
+    #startBtn{
+        font-size:1.55rem;
+        height:72px;
+    }
 
 }
 
@@ -556,7 +600,7 @@ startBtn.onclick = ()=>{
 
 };
 
-/* AUTO SCALE */
+/* AUTO SCALE HEIGHT */
 
 function scaleToFit(){
 
